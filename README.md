@@ -48,6 +48,12 @@ Submissions for each exercise shall be organized in the `docs` folder.
 - The repository content evolves during the course and may intentionally include defects for learning purposes.
 - If you discover issues, document them and propose fixes as part of your exercises (e.g., via pull requests or notes in `docs/`).
 
+### Architecture 
+- **Frontend**: React + TypeScript + Buildtool Vite
+- **Backend**: Node.js + Express + Typescript
+- **Database**: PostgreSQL (via Docker)
+- **Styling**: Tailwind CSS
+- **Development**: Docker Compose for local Development
 
 ### License
 This project is licensed under Apache 2.0. See: [LICENSE](LICENSE)
