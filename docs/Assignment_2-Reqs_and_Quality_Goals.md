@@ -41,7 +41,93 @@
 
 # Exercise 2.2 - Quality Model
 
+## 1 | Introduction
+According to the lecture material, *software quality* is *“the totality of characteristics of a software product with regard to its suitability to fulfill defined and assumed requirements.”*  
+(Source: `SWT_02_requirements_use_cases.pdf`, p. 14–17)
 
+Based on ISO 25010 (p. 34–42), quality is analyzed through eight major attributes.  
+For *StudyConnect*, the most relevant quality attributes are selected and modeled below.
+
+## 2 | Selected Quality Aspects for StudyConnect
+
+### (1) Usability
+**Abstract (ISO 25010):**  
+Degree to which the product can be used by specified users to achieve goals effectively, efficiently, and satisfactorily.
+
+**Justification (StudyConnect PDF):**  
+Requirement 1 explicitly states *“The application must provide an intuitive and logical user interface that allows students to quickly create and manage tasks without prior training.”*
+
+**Quality Model (3-Step Structure from lecture p. 43–45):**
+
+| Step | Specification |
+|------|----------------|
+| **Abstract goal** | High usability |
+| **Specific meaning** | Interface is intuitive, simple, and supports quick task creation/organization |
+| **Indicators & Metrics** | - Learnability: students perform basic actions after ≤ 5 minutes of use<br>- Operability: all core functions reachable within 2 clicks<br>- User error protection: confirmation before deletion |
+
+### (2) Functional Suitability
+**Abstract (ISO 25010 p. 35):**  
+Degree to which the system provides functions that meet stated and implied needs.
+
+**Justification (StudyConnect PDF):**  
+The app must support *“individual and group task management”* and *“distinguish between group members and administrators.”*
+
+**Quality Model:**
+
+| Step | Specification |
+|------|----------------|
+| **Abstract goal** | Functional suitability |
+| **Specific meaning** | All required functions (personal tasks, group tasks, progress tracking, role management) implemented correctly |
+| **Indicators & Metrics** | - Functional completeness: 100 % of listed features implemented<br>- Functional correctness: test cases return expected results<br>- Functional appropriateness: users can achieve study planning without redundant steps |
+
+### (3) Reliability
+**Abstract (ISO 25010 p. 39):**  
+Degree to which the system performs specified functions under stated conditions for a specified period.
+
+**Justification (StudyConnect PDF):**  
+System shall *“maintain an overview of academic progress,”* *“assist users in identifying overdue tasks,”* and highlight activities—implying stable and consistent operation.
+
+**Quality Model:**
+
+| Step | Specification |
+|------|----------------|
+| **Abstract goal** | Reliability |
+| **Specific meaning** | StudyConnect should display tasks, deadlines, and progress correctly at all times |
+| **Indicators & Metrics** | - Availability: ≥ 99 % uptime during academic periods<br>- Fault tolerance: no data loss after interruption<br>- Recoverability: restore user session state after reload |
+
+### (4) Portability
+**Abstract (ISO 25010 p. 42):**  
+Degree of effectiveness and efficiency with which a product can be transferred between environments.
+
+**Justification (StudyConnect PDF):**  
+*“The system will be available across web, mobile, and potentially desktop platforms.”*  
+Also supports *PDF and ICS export* and *modular design for future extensions.*
+
+**Quality Model:**
+
+| Step | Specification |
+|------|----------------|
+| **Abstract goal** | Portability & accessibility |
+| **Specific meaning** | Application operates consistently across web and mobile and allows export/integration |
+| **Indicators & Metrics** | - Adaptability: feature parity between platforms<br>- Installability: mobile access without technical barriers<br>- Replaceability: modules extendable without core rewrite |
+
+## 3 | Ensuring the Quality Aspect “Testability”
+**Source:** ISO 25010 p. 41 (“Maintainability → Testability”)  
+Defined as *“degree of effectiveness and efficiency with which test criteria can be established and tests can be performed.”*
+
+**Relation to StudyConnect:**  
+The StudyConnect PDF states that the system should be *“lightweight, modular, and accessible.”*  
+Modularity directly supports testability.
+
+**Measures (based on lecture p. 41 and StudyConnect description):**
+1. **Modular Architecture:** Each functional area (task management, group management, notifications) forms a testable unit.  
+2. **Clear Role Separation:** Member and admin permissions defined → independent test cases.  
+3. **State-based Testing:** Tasks have defined progress states (*open, in progress, completed*) → finite and testable transitions.  
+4. **Measurable Output:** Exports (PDF/ICS) serve as verifiable test artifacts.
+
+## 4 | Summary
+The four chosen ISO 25010 attributes—Usability, Functional Suitability, Reliability, and Portability—directly reflect the **six high-level expectations** listed in the *StudyConnect* PDF and are supported by the quality modeling method defined in the lecture slides (*Abstract → Specific → Measurable*).  
+Together they form a verifiable and test-ready quality model for *StudyConnect*.
 
 # Exercise 2.3 - System Context & Use Cases
 
