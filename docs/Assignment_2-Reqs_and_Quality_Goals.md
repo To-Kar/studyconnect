@@ -76,7 +76,8 @@ SC -- "Send reminders/notifications" --> Notify
 ```
 
 ## 2. Use Case Diagram - Task Management
-```flowchart TD
+```mermaid
+flowchart TD
 %% Use Case Diagram — StudyConnect / Task Management
 
 classDef actor fill:#fff,stroke:#333,stroke-width:1.5px;
