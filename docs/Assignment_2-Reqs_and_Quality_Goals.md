@@ -46,7 +46,7 @@
 # Exercise 2.3 - System Context & Use Cases
 
 ## 1. System Context Diagram
-```flowchart LR
+```mermaid LR
 %% System Context Diagram — StudyConnect
 
 classDef actor fill:#fff,stroke:#333,stroke-width:1.5px;
