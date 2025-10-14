@@ -46,7 +46,7 @@
 # Exercise 2.3 - System Context & Use Cases
 
 ## 1. System Context Diagram
-```mermaid LR
+```graph LR
 %% System Context Diagram — StudyConnect
 
 classDef actor fill:#fff,stroke:#333,stroke-width:1.5px;
@@ -61,7 +61,6 @@ Time((Time Event)):::actor
 Calendar[(Calendar App)]:::external
 Notify[(Email/Push Service)]:::external
 
-%% Labeled, directed flows
 Student -- "Create/Edit tasks, add comments" --> SC
 SC -- "Display task lists, comments, progress" --> Student
 
