@@ -1,11 +1,11 @@
 # Exercise 11.1 — Ranked UX factors for StudyConnect
 
-1) **Efficiency** — Students complete planning tasks fast; reduces admin overhead. :contentReference[oaicite:0]{index=0}  
-2) **Perspicuity / Understandability** — New users grasp flows without training. :contentReference[oaicite:1]{index=1}  
-3) **Dependability / Control** — Clear system feedback and control builds trust. :contentReference[oaicite:2]{index=2}  
-4) **Stimulation** — Motivates continued use during the semester. :contentReference[oaicite:3]{index=3}  
-5) **Attractiveness** — Pleasant look-and-feel supports adoption. :contentReference[oaicite:4]{index=4}  
-6) **Novelty** — Helpful if it offers a fresh, valuable twist; not essential. :contentReference[oaicite:5]{index=5}
+1) **Efficiency** — Students complete planning tasks fast; reduces admin overhead.  
+2) **Perspicuity / Understandability** — New users grasp flows without training.  
+3) **Dependability / Control** — Clear system feedback and control builds trust. 
+4) **Stimulation** — Motivates continued use during the semester.  
+5) **Attractiveness** — Pleasant look-and-feel supports adoption. 
+6) **Novelty** — Helpful if it offers a fresh, valuable twist; not essential. 
 
 ---
 
@@ -13,12 +13,12 @@
 
 | Factor | Why for StudyConnect | Example lever |
 |---|---|---|
-| Efficiency | Many small, frequent tasks | One-click add task; keyboard shortcuts; bulk edit. :contentReference[oaicite:9]{index=9} |
-| Perspicuity | Onboarding must be trivial | Plain language labels; empty-state hints. :contentReference[oaicite:10]{index=10} |
-| Dependability | Deadlines require trust | Status/undo; clear error messages; autosave. :contentReference[oaicite:11]{index=11} |
-| Stimulation | Sustained engagement | Progress badges; streaks; gentle reminders. :contentReference[oaicite:12]{index=12} |
-| Attractiveness | First impression, daily use | Clean, minimalist screens; visual hierarchy. :contentReference[oaicite:13]{index=13} |
-| Novelty | Differentiation | Smart suggestions for study plans. :contentReference[oaicite:14]{index=14} |
+| Efficiency | Many small, frequent tasks | One-click add task; keyboard shortcuts; bulk edit.  |
+| Perspicuity | Onboarding must be trivial | Plain language labels; empty-state hints.  |
+| Dependability | Deadlines require trust | Status/undo; clear error messages; autosave. |
+| Stimulation | Sustained engagement | Progress badges; streaks; gentle reminders.  |
+| Attractiveness | First impression, daily use | Clean, minimalist screens; visual hierarchy. |
+| Novelty | Differentiation | Smart suggestions for study plans.  |
 
 # Exercise 11.2 — Emotional Reactions ↔ UX Factors (StudyConnect)
 
