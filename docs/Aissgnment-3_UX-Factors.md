@@ -32,3 +32,14 @@
 | “Wow.” | **Attractiveness** | Positive aesthetic response; pleasure and visual appeal. |
 | “Something went wrong.” | **Dependability (Error Awareness)** | Broken control or feedback loop reduces perceived reliability. |
 | “I’ve never seen anything like this before.” | **Novelty** | Innovative and fresh design sparks curiosity and surprise. |
+
+# Exercise 11.3 — Relevant UX Factors for StudyConnect
+
+| UX Factor | a) Importance for StudyConnect Users | b) How Design/Features Support It | c) Risks if Ignored |
+|------------|--------------------------------------|----------------------------------|---------------------|
+| **Efficiency** | Students manage numerous tasks; quick, simple interactions reduce effort. | Streamlined task creation, shortcuts, one-tap overview of deadlines. | Cognitive overload and frustration; abandonment for snappier tools. |
+| **Perspicuity (Understandability)** | Immediate comprehension increases adoption. | Clear labels, plain onboarding flow, intuitive toggle between team/personal tasks. | Users misinterpret functions, causing low trust and adoption. |
+| **Dependability (Control & Trust)** | Shared deadlines demand reliability and reassurance. | Visual feedback (saving, syncing), undo feature, predictable outcomes. | Missed deadlines, data errors, decreased perceived reliability. |
+| **Stimulation** | Sustains study motivation via playful and social cues. | Gamified progress, badges, group goals, supportive messages. | App feels cold or utilitarian; engagement declines mid-term. |
+| **Attractiveness** | Emotional appeal enhances retention and attachment. | Modern, readable UI, color consistency, responsive design for all devices. | Users perceive the product as outdated or uninspiring. |
+| **Novelty** | Differentiates StudyConnect and stimulates curiosity. | New visualization (e.g., modular goal timeline) and contextual AI suggestions. | Product seen as undistinctive; innovation overshadowed by competitors
