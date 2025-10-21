@@ -19,3 +19,16 @@
 | Stimulation | Sustained engagement | Progress badges; streaks; gentle reminders. :contentReference[oaicite:12]{index=12} |
 | Attractiveness | First impression, daily use | Clean, minimalist screens; visual hierarchy. :contentReference[oaicite:13]{index=13} |
 | Novelty | Differentiation | Smart suggestions for study plans. :contentReference[oaicite:14]{index=14} |
+
+# Exercise 11.2 — Emotional Reactions ↔ UX Factors (StudyConnect)
+
+| Emotional Reaction | UX Factor | Explanation (based on UEQ and lecture) |
+|--------------------|-----------|-----------------------------------------|
+| “That is exactly what I needed.” | **Efficiency** | The system helps users achieve their goal quickly and precisely. |
+| “It makes life easier.” | **Perspicuity (Understandability)** | Interface is simple and self-explanatory; low learning effort. |
+| “I’m in control.” / “I am the boss.” | **Dependability (Control & Predictability)** | Clear feedback and reliable actions make users feel safe and in control. |
+| “We know each other.” | **Dependability (Familiarity)** | Builds emotional trust through predictable interaction over time. |
+| “Not being alone.” | **Stimulation** | Feeling of social connection and engagement motivates continued use. |
+| “Wow.” | **Attractiveness** | Positive aesthetic response; pleasure and visual appeal. |
+| “Something went wrong.” | **Dependability (Error Awareness)** | Broken control or feedback loop reduces perceived reliability. |
+| “I’ve never seen anything like this before.” | **Novelty** | Innovative and fresh design sparks curiosity and surprise. |
