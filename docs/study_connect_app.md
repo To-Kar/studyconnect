@@ -52,3 +52,19 @@ StudyConnect is not intended to be a full project management suite. The focus is
    - Include positive reinforcement without distracting from learning objectives.
 6. Accessibility and Integration
    - Ensure cross-device accessibility and support exports (PDF, ICS) for workflow integration.
+
+## Overall Architecture
+
+### Technology Stack
+- Frontend: React + TypeScript + Vite
+- Backend: Node.js + Express + TypeScript
+- Database: PostgreSQL (via Docker)
+- Styling: TailwindCSS
+- Development: Docker Compose for local development
+
+
+
+
+
+
+
