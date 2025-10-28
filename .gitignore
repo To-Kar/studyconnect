@@ -114,8 +114,13 @@ build/
 *.pem
 *.key
 
+# ------------------------------
+# Test coverage artifacts (generated)
+# ------------------------------
+coverage/
+**/coverage/
+**/lcov-report/
+**/lcov.info
+backend/coverage/
 
 
-# Ignore build outputs
-/dist/
-dist/

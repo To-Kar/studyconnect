@@ -1,0 +1,77 @@
+{
+  "name": "StudyConnect Backend Tests",
+  "version": "1.0.0",
+  "description": "Comprehensive test suite following xyzTesting patterns",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:unit": "jest --testPathPattern=__tests__/.*\\.test\\.ts$",
+    "test:integration": "jest --testPathPattern=integration\\.test\\.ts$",
+    "test:mock": "jest --testPathPattern=mock\\.test\\.ts$",
+    "test:verbose": "jest --verbose",
+    "test:silent": "jest --silent"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.test.ts",
+      "!src/**/*.mock.ts"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 90,
+        "lines": 85,
+        "statements": 85
+      }
+    },
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/__tests__/setup.ts"
+    ],
+    "verbose": true,
+    "collectCoverage": false,
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "html"
+    ]
+  },
+  "testCategories": {
+    "unit": {
+      "description": "Test individual functions and classes in isolation",
+      "pattern": "*.test.ts",
+      "coverage_target": "90%"
+    },
+    "integration": {
+      "description": "Test interactions between multiple components",
+      "pattern": "integration.test.ts",
+      "coverage_target": "85%"
+    },
+    "mock": {
+      "description": "Test with mocked dependencies (following Mockito patterns)",
+      "pattern": "*.mock.test.ts",
+      "coverage_target": "80%"
+    }
+  },
+  "testPatterns": {
+    "naming": "should_[action]_[expected_result]",
+    "structure": "Arrange-Act-Assert (AAA)",
+    "setup": "beforeEach for clean state",
+    "teardown": "automatic cleanup",
+    "assertions": "detailed expect() statements"
+  },
+  "alignment_with_xyzTesting": {
+    "java_junit5": "TypeScript Jest equivalent patterns",
+    "python_unittest": "Class-based test organization",
+    "c_cunit": "Function-based test structure adapted",
+    "cpp_googletest": "Test fixture patterns adapted",
+    "mockito_patterns": "Mock testing approach",
+    "cucumber_bdd": "Gherkin-style feature files"
+  }
+}
