@@ -123,4 +123,7 @@ coverage/
 **/lcov.info
 backend/coverage/
 
+# Cucumber reports
+backend/src/__tests__/bdd/reports/
+
 

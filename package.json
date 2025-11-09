@@ -7,5 +7,9 @@
     "supertest": "^7.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "test:bdd": "cucumber-js -r ts-node/register --config cucumber.js",
+    "test:ci": "npm run test:bdd"
   }
 }

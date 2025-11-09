@@ -60,3 +60,11 @@ This separation balances fast iteration for developers with regular validation o
 - “Ambiguous steps”: ensure each step text maps to exactly one step definition.
 - DB connection errors: ensure Postgres is up (`docker compose up -d`) and env matches.
 - Port 3000 in use: stop other servers or change `PORT`.
+
+## CI integration (GitHub Actions)
+- Workflow: `.github/workflows/tests.yml`
+- Triggers: push and PRs on `main`
+- Services: PostgreSQL 16
+- Steps: install deps (root + backend), set DB env, run `npm run test:bdd`, upload Cucumber HTML report as artifact.
+
+This provides automated evidence that BDD tests execute in CI. Reports are not committed (ignored via `.gitignore`) and are attached to each workflow run.
