@@ -1,9 +1,16 @@
 import { BeforeAll, AfterAll } from "@cucumber/cucumber";
+import { startServer } from "../../../server";
+import type { Server } from 'http';
+
+let server: Server;
 
 BeforeAll(async () => {
-  // Optionally: wait for API health if you start the server here
+  process.env.BDD_MODE = 'true';
+  server = await startServer();
 });
 
 AfterAll(async () => {
-  // Optionally: close resources
+  if (server) {
+    server.close();
+  }
 });

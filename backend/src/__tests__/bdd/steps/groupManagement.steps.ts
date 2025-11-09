@@ -1,7 +1,7 @@
 import { Given, When, Then } from "@cucumber/cucumber";
 import chai from "chai";
 import request from "supertest";
-import app from "../../../server";
+import app from "../../../app";
 import { CustomWorld } from "../support/world";
 const expect = chai.expect;
 
