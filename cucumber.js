@@ -9,6 +9,7 @@ module.exports = {
     publishQuiet: true,
     format: [
       "progress",
+      "summary",
       "html:src/__tests__/bdd/reports/cucumber-report.html"
     ],
     worldParameters: {}
