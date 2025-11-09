@@ -22,5 +22,6 @@ module.exports = {
     'html'
   ],
   setupFilesAfterEnv: ['<rootDir>/src/__tests__/setup.ts'],
-  verbose: true
+  verbose: true,
+  // BDD tests are executed separately via npm run test:bdd
 };
