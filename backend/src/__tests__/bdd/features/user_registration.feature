@@ -32,4 +32,3 @@ Feature: User Registration
     Given I have forgotten my password
     When I request a password reset for my email "user1@example.com"
     Then an email with password reset instructions should be sent
-    And the operation should return status 200

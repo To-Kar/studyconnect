@@ -43,9 +43,16 @@ jobs:
         env:
           API_BASE_URL: http://localhost:3000
           JWT_SECRET: test-secret
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USER: postgres
+          DB_PASSWORD: postgres
+          DB_NAME: studyconnect
         run: npm run test:bdd
+        
       - name: Upload Cucumber report
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: cucumber-report
           path: backend/src/__tests__/bdd/reports/cucumber-report.html

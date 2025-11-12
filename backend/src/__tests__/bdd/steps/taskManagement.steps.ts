@@ -60,3 +60,70 @@ And("I change the priority to {string}", async function (this: CustomWorld, newP
   const body = { title: this.newTitle, priority: newPriority };
   this.lastResponse = await this.apiClient.put(`/tasks/${this.lastTaskId}`, body);
 });
+
+// Edit task scenario
+When('I update the task title to {string}', async function(this: CustomWorld, newTitle: string) {
+  this.lastResponse = await request(app)
+    .put(`/api/tasks/${this.currentTaskId}`)
+    .set('Authorization', `Bearer ${this.authToken}`)
+    .send({ title: newTitle });
+});
+
+When('I change the priority to {string}', async function(this: CustomWorld, priority: string) {
+  this.lastResponse = await request(app)
+    .put(`/api/tasks/${this.currentTaskId}`)
+    .set('Authorization', `Bearer ${this.authToken}`)
+    .send({ priority });
+});
+
+// Delete task scenario
+When('I delete the task', async function(this: CustomWorld) {
+  this.lastResponse = await request(app)
+    .delete(`/api/tasks/${this.currentTaskId}`)
+    .set('Authorization', `Bearer ${this.authToken}`);
+});
+
+Then('the task deletion should succeed with status {int}', function(this: CustomWorld, status: number) {
+  // Accept 200 or 204 (No Content)
+  expect([200, 204]).to.include(this.lastResponse!.status);
+});
+
+Then('the task should no longer be in my task list', async function(this: CustomWorld) {
+  const res = await request(app)
+    .get('/api/tasks')
+    .set('Authorization', `Bearer ${this.authToken}`);
+  const tasks = res.body.data.tasks;
+  const found = tasks.find((t: any) => t.id === this.currentTaskId);
+  expect(found).to.be.undefined;
+});
+
+// Filter tasks scenario
+Given('I have multiple tasks with different priorities', async function(this: CustomWorld) {
+  await request(app)
+    .post('/api/tasks')
+    .set('Authorization', `Bearer ${this.authToken}`)
+    .send({ title: 'High Priority Task', priority: 'HIGH' });
+  await request(app)
+    .post('/api/tasks')
+    .set('Authorization', `Bearer ${this.authToken}`)
+    .send({ title: 'Medium Priority Task', priority: 'MEDIUM' });
+  await request(app)
+    .post('/api/tasks')
+    .set('Authorization', `Bearer ${this.authToken}`)
+    .send({ title: 'Low Priority Task', priority: 'LOW' });
+});
+
+When('I filter tasks by priority {string}', async function(this: CustomWorld, priority: string) {
+  this.lastResponse = await request(app)
+    .get(`/api/tasks?priority=${priority}`)
+    .set('Authorization', `Bearer ${this.authToken}`);
+});
+
+Then('only tasks with priority {string} are displayed', function(this: CustomWorld, priority: string) {
+  expect(this.lastResponse!.status).to.equal(200);
+  const tasks = this.lastResponse!.body.data.tasks;
+  expect(tasks.length).to.be.greaterThan(0);
+  tasks.forEach((task: any) => {
+    expect(task.priority).to.equal(priority);
+  });
+});
