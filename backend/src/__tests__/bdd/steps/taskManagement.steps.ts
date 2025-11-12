@@ -1,61 +1,62 @@
-import { Given, When, Then } from "@cucumber/cucumber";
-import chai from "chai";
-import request from "supertest";
-import app from "../../../app";
+import { Given, When, Then, And } from "@cucumber/cucumber";
 import { CustomWorld } from "../support/world";
-const expect = chai.expect;
+import * as assert from "assert";
 
-Given('I am an authenticated user', async function(this: CustomWorld) {
-  const unique = Date.now();
-  const reg = await request(app).post('/api/auth/register').send({
-    email: `auth_${unique}@example.com`,
-    username: `auth_${unique}`,
-    password: 'Password123!'
-  });
-  const login = await request(app).post('/api/auth/login').send({
-    email: reg.body.data.user.email,
-    password: 'Password123!'
-  });
-  this.authToken = login.body.data.token;
-  expect(this.authToken).to.be.a('string');
+Given("I am an authenticated user", async function (this: CustomWorld) {
+  // Stellt sicher, dass ein Token vorhanden ist, sonst führt einen Login durch
+  if (!this.apiClient.getAuthToken()) {
+    const body = { username: "testuser", password: "password" };
+    const response = await this.apiClient.post("/login", body);
+    this.apiClient.setAuthToken(response.data.token);
+  }
+  assert.ok(this.apiClient.getAuthToken(), "Authentifizierung fehlgeschlagen");
 });
 
-When('I create a task with title {string} and priority {string}', async function(this: CustomWorld, title: string, priority: string) {
-  this.lastResponse = await request(app)
-    .post('/api/tasks')
-    .set('Authorization', `Bearer ${this.authToken}`)
-    .send({ title, priority });
-  this.currentTaskId = this.lastResponse!.body.data.task.id;
+When("I create a task with title {string} and priority {string}", async function (this: CustomWorld, title: string, priority: string) {
+  const body = { title, priority };
+  this.lastResponse = await this.apiClient.post("/tasks", body);
+  
+  if (this.lastResponse.status === 201) {
+    this.lastTaskId = this.lastResponse.data.id;
+  }
 });
 
-Then('the task should be created with status {int}', function(this: CustomWorld, status: number) {
-  expect(this.lastResponse!.status).to.equal(status);
+Then("the task should be created with status {int}", function (this: CustomWorld, expectedStatus: number) {
+  assert.strictEqual(this.lastResponse.status, expectedStatus);
 });
 
-Then('the task response should have title {string} and priority {string}', function(this: CustomWorld, title: string, priority: string) {
-  expect(this.lastResponse!.body.data.task.title).to.equal(title);
-  expect(this.lastResponse!.body.data.task.priority).to.equal(priority);
+And("the task response should have title {string} and priority {string}", function (this: CustomWorld, title: string, priority: string) {
+  assert.strictEqual(this.lastResponse.data.title, title);
+  assert.strictEqual(this.lastResponse.data.priority, priority);
 });
 
-Given('I have a task titled {string}', async function(this: CustomWorld, title: string) {
-  const res = await request(app)
-    .post('/api/tasks')
-    .set('Authorization', `Bearer ${this.authToken}`)
-    .send({ title, priority: 'MEDIUM' });
-  this.currentTaskId = res.body.data.task.id;
+Given("I have a task titled {string}", async function (this: CustomWorld, title: string) {
+  // Setup-Schritt: Erstellt die Task
+  const body = { title, priority: "MEDIUM" };
+  const response = await this.apiClient.post("/tasks", body);
+  assert.strictEqual(response.status, 201);
+  this.lastTaskId = response.data.id;
 });
 
-When('I mark the task as DONE', async function(this: CustomWorld) {
-  this.lastResponse = await request(app)
-    .put(`/api/tasks/${this.currentTaskId}`)
-    .set('Authorization', `Bearer ${this.authToken}`)
-    .send({ status: 'DONE' });
+When("I mark the task as DONE", async function (this: CustomWorld) {
+  const body = { status: "DONE" };
+  this.lastResponse = await this.apiClient.put(`/tasks/${this.lastTaskId}`, body);
 });
 
-Then('the task update should succeed with status {int}', function(this: CustomWorld, status: number) {
-  expect(this.lastResponse!.status).to.equal(status);
+Then("the task update should succeed with status {int}", function (this: CustomWorld, expectedStatus: number) {
+  assert.strictEqual(this.lastResponse.status, expectedStatus);
 });
 
-Then('the user should receive points for completion', function(this: CustomWorld) {
-  expect(this.lastResponse!.body.data.pointsAwarded).to.equal(true);
+And("the user should receive points for completion", async function (this: CustomWorld) {
+  const response = await this.apiClient.get("/me");
+  assert.ok(response.data.points > 0, "Benutzer hat keine Punkte erhalten");
+});
+
+When("I update the task title to {string}", function (this: CustomWorld, newTitle: string) {
+  this.newTitle = newTitle;
+});
+
+And("I change the priority to {string}", async function (this: CustomWorld, newPriority: string) {
+  const body = { title: this.newTitle, priority: newPriority };
+  this.lastResponse = await this.apiClient.put(`/tasks/${this.lastTaskId}`, body);
 });
