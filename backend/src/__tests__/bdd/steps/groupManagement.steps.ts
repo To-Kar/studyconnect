@@ -1,63 +1,80 @@
-import { Given, When, Then } from "@cucumber/cucumber";
-import chai from "chai";
-import request from "supertest";
-import app from "../../../app";
+import { Given, When, Then, And } from "@cucumber/cucumber";
 import { CustomWorld } from "../support/world";
-const expect = chai.expect;
+import * as assert from "assert";
 
-let groupId: string;
-
-Given(/^there is an existing group named "([^"]+)"(?: created by another user)?$/, async function(this: CustomWorld, name: string) {
-  // Create a separate owner user for the group, so current user can join
-  const unique = Date.now();
-  await request(app).post('/api/auth/register').send({
-    email: `owner_${unique}@example.com`,
-    username: `owner_${unique}`,
-    password: 'Password123!'
-  });
-  const ownerLogin = await request(app).post('/api/auth/login').send({
-    email: `owner_${unique}@example.com`,
-    password: 'Password123!'
-  });
-  const ownerToken = ownerLogin.body.data.token;
-
-  const res = await request(app)
-    .post('/api/groups')
-    .set('Authorization', `Bearer ${ownerToken}`)
-    .send({ name });
-  groupId = res.body.data.group.id;
+When("I create a group named {string}", async function (this: CustomWorld, groupName: string) {
+  const body = { name: groupName };
+  this.lastResponse = await this.apiClient.post("/groups", body);
+  
+  if (this.lastResponse.status === 201) {
+    this.lastGroupId = this.lastResponse.data.id;
+  }
 });
 
-When('I create a group named {string}', async function(this: CustomWorld, name: string) {
-  this.lastResponse = await request(app)
-    .post('/api/groups')
-    .set('Authorization', `Bearer ${this.authToken}`)
-    .send({ name });
+Then("the group creation should return status {int}", function (this: CustomWorld, expectedStatus: number) {
+  assert.strictEqual(this.lastResponse.status, expectedStatus);
 });
 
-Then('the group creation should return status {int}', function(this: CustomWorld, status: number) {
-  expect(this.lastResponse!.status).to.equal(status);
+And("the group response should include name {string}", function (this: CustomWorld, groupName: string) {
+  assert.strictEqual(this.lastResponse.data.name, groupName);
 });
 
-Then('the group response should include name {string}', function(this: CustomWorld, name: string) {
-  expect(this.lastResponse!.body.data.group.name).to.equal(name);
+Given("there is an existing group named {string} created by another user", async function (this: CustomWorld, groupName: string) {
+  // Setup: Simuliert, dass eine Gruppe existiert.
+  // Hier wird nur eine ID für den Test gesetzt.
+  this.joinableGroupId = "group-id-from-other-user";
 });
 
-When('I join that group', async function(this: CustomWorld) {
-  this.lastResponse = await request(app)
-    .post(`/api/groups/${groupId}/join`)
-    .set('Authorization', `Bearer ${this.authToken}`)
-    .send();
+When("I join that group", async function (this: CustomWorld) {
+  this.lastResponse = await this.apiClient.post(`/groups/${this.joinableGroupId}/join`, {});
 });
 
-Then('joining the group should return status {int}', function(this: CustomWorld, status: number) {
-  expect(this.lastResponse!.status).to.equal(status);
+Then("joining the group should return status {int}", function (this: CustomWorld, expectedStatus: number) {
+  assert.strictEqual(this.lastResponse.status, expectedStatus);
 });
 
-Then('I should be a member of that group', async function(this: CustomWorld) {
-  const groups = await request(app)
-    .get('/api/groups')
-    .set('Authorization', `Bearer ${this.authToken}`);
-  const found = groups.body.data.groups.find((g: any) => g.id === groupId);
-  expect(found).to.exist;
+And("I should be a member of that group", async function (this: CustomWorld) {
+  const response = await this.apiClient.get(`/groups/${this.joinableGroupId}/members`);
+  const myUserId = this.apiClient.getUserId();
+  const members = response.data as Array<{ userId: string }>;
+  
+  const isMember = members.some(member => member.userId === myUserId);
+  assert.ok(isMember, "Benutzer-ID nicht in der Mitgliederliste gefunden");
+});
+
+Given("I am a member of group {string}", async function (this: CustomWorld, groupName: string) {
+  // Setup: Gruppe erstellen UND beitreten
+  const createResponse = await this.apiClient.post("/groups", { name: groupName });
+  this.lastGroupId = createResponse.data.id;
+  await this.apiClient.post(`/groups/${this.lastGroupId}/join`, {});
+});
+
+When("I leave the group", async function (this: CustomWorld) {
+  this.lastResponse = await this.apiClient.post(`/groups/${this.lastGroupId}/leave`, {});
+});
+
+Then("I should no longer be a member of {string}", async function (this: CustomWorld, groupName: string) {
+  const response = await this.apiClient.get(`/groups/${this.lastGroupId}/members`);
+  const myUserId = this.apiClient.getUserId();
+  const members = response.data as Array<{ userId: string }>;
+  
+  const isMember = members.some(member => member.userId === myUserId);
+  assert.strictEqual(isMember, false, "Benutzer ist immer noch Mitglied der Gruppe");
+});
+
+And("the operation should return status {int}", function (this: CustomWorld, expectedStatus: number) {
+  assert.strictEqual(this.lastResponse.status, expectedStatus);
+});
+
+When("I attempt to join a group named {string}", async function (this: CustomWorld, groupName: string) {
+  const nonExistentGroupId = "non-existent-id-123";
+  this.lastResponse = await this.apiClient.post(`/groups/${nonExistentGroupId}/join`, {});
+});
+
+Then("the operation should fail with status {int}", function (this: CustomWorld, expectedStatus: number) {
+  assert.strictEqual(this.lastResponse.status, expectedStatus);
+});
+
+And("the response should include an error message {string}", function (this: CustomWorld, expectedMessage: string) {
+  assert.strictEqual(this.lastResponse.data.message, expectedMessage);
 });
