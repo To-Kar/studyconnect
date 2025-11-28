@@ -14,3 +14,21 @@ case is, that we did not implement all use cases.
   - ICS export: headers and VCALENDAR content with due tasks.
   - Task comments controllers: add/list/delete, missing comment error.
   - Notifications controllers: list (unreadOnly), create (defaults to current user), mark-as-read.
+
+## Exercise 6.2: Service Testing (UserService)
+
+Implemented `UserService` and its unit tests using Jest mocks to isolate business logic from the database.
+
+### Implementation
+- **UserService**: Created a service layer to handle user operations.
+  - **Registration**: Validates password length (>6 chars) and checks for existing users before creation.
+  - **Login**: Verifies email existence and password matching.
+  - **Role Assignment**: Automatically assigns `Role.USER` to new registrations.
+
+### Testing Strategy
+- **Mocking**: Used `jest.mock` to replace `dataStore` dependency.
+- **Scenarios Verified**:
+  1.  **Successful Registration**: Verifies `createUser` is called with correct data.
+  2.  **Validation Errors**: Ensures short passwords throw "Password too short".
+  3.  **Duplicate Handling**: Ensures existing users throw "User already exists".
+  4.  **Login Flow**: Verifies successful login and invalid credential rejection.
