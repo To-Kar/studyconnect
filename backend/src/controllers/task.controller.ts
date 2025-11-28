@@ -22,7 +22,7 @@ export const createTask = async (
   next: NextFunction
 ) => {
   try {
-    const { title, description, priority, dueDate, assigneeId, groupId } = req.body;
+    const { title, description, priority, dueDate, assigneeId, groupId, category, notes } = req.body;
 
     if (!title) {
       throw new AppError('Task title is required', 400);
@@ -36,6 +36,8 @@ export const createTask = async (
       creatorId: req.user!.id,
       assigneeId: assigneeId || req.user!.id,
       groupId,
+      category,
+      notes,
       status: TaskStatus.OPEN,
       points: 10
     });
@@ -170,6 +172,7 @@ export const updateTask = async (
           points: user.points + existingTask.points
         });
         pointsAwarded = true;
+        await dataStore.checkAndAwardBadges(userId);
       }
     }
 
@@ -216,6 +219,128 @@ export const deleteTask = async (
       status: 'success',
       data: null
     });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const addTaskComment = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id: taskId } = req.params;
+    const { content } = req.body;
+
+    if (!content) {
+      throw new AppError('Comment content is required', 400);
+    }
+
+    const task = await dataStore.findTaskById(taskId);
+    if (!task) {
+      throw new AppError('Task not found', 404);
+    }
+
+    const comment = await dataStore.createTaskComment({
+      taskId,
+      userId: req.user!.id,
+      content
+    });
+
+    res.status(201).json({
+      status: 'success',
+      data: { comment }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getTaskComments = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id: taskId } = req.params;
+    const task = await dataStore.findTaskById(taskId);
+    if (!task) {
+      throw new AppError('Task not found', 404);
+    }
+
+    const comments = await dataStore.findTaskCommentsByTaskId(taskId);
+    res.status(200).json({
+      status: 'success',
+      results: comments.length,
+      data: { comments }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteTaskComment = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { commentId } = req.params;
+    const comments = await dataStore.findTaskCommentsByTaskId(req.params.id || '');
+    const comment = comments.find(c => c.id === commentId);
+
+    // Allow deletion by author or admins
+    if (!comment) {
+      throw new AppError('Comment not found', 404);
+    }
+    if (comment.userId !== req.user!.id && req.user!.role !== 'ADMIN') {
+      throw new AppError('Not authorized to delete this comment', 403);
+    }
+
+    await dataStore.deleteTaskComment(commentId);
+    res.status(204).json({
+      status: 'success',
+      data: null
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const exportTasksICS = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const tasks = await dataStore.getTasksWithRelations({ assigneeId: req.user!.id });
+    const now = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const events = tasks
+      .filter(t => t.dueDate)
+      .map(t => {
+        const due = t.dueDate!.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+        const uid = `${t.id}@studyconnect`;
+        return [
+          'BEGIN:VEVENT',
+          `UID:${uid}`,
+          `DTSTAMP:${now}`,
+          `SUMMARY:${t.title}`,
+          `DESCRIPTION:${(t.description || '').replace(/\r?\n/g, '\\n')}`,
+          `DTSTART:${due}`,
+          `DTEND:${due}`,
+          'END:VEVENT'
+        ].join('\n');
+      })
+      .join('\n');
+
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//StudyConnect//EN', events, 'END:VCALENDAR']
+      .filter(Boolean)
+      .join('\n');
+
+    res.setHeader('Content-Type', 'text/calendar');
+    res.setHeader('Content-Disposition', 'attachment; filename="tasks.ics"');
+    res.status(200).send(ics);
   } catch (error) {
     next(error);
   }

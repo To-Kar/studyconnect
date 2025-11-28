@@ -556,6 +556,51 @@ class DatabaseService {
     return (rowCount || 0) > 0;
   }
 
+  // Notification methods
+  async createNotification(notificationData: Omit<Notification, 'id' | 'createdAt'>): Promise<Notification> {
+    const { rows } = await pool.query(`
+      INSERT INTO notifications (user_id, type, title, message, read, task_id)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING id, user_id as "userId", type, title, message, read, task_id as "taskId", created_at as "createdAt"
+    `, [
+      notificationData.userId,
+      notificationData.type,
+      notificationData.title,
+      notificationData.message,
+      notificationData.read,
+      notificationData.taskId || null
+    ]);
+
+    return rows[0];
+  }
+
+  async findNotificationsByUserId(userId: string, unreadOnly: boolean = false): Promise<Notification[]> {
+    const params: any[] = [userId];
+    let query = `
+      SELECT id, user_id as "userId", type, title, message, read, task_id as "taskId", created_at as "createdAt"
+      FROM notifications
+      WHERE user_id = $1
+    `;
+
+    if (unreadOnly) {
+      params.push(false);
+      query += ` AND read = $2`;
+    }
+
+    query += ' ORDER BY created_at DESC';
+
+    const { rows } = await pool.query(query, params);
+    return rows;
+  }
+
+  async markNotificationAsRead(id: string): Promise<boolean> {
+    const { rowCount } = await pool.query(`
+      UPDATE notifications SET read = true WHERE id = $1
+    `, [id]);
+
+    return (rowCount || 0) > 0;
+  }
+
   // Badge system methods
   async awardBadge(userId: string, badgeName: string): Promise<boolean> {
     const user = await this.findUserById(userId);

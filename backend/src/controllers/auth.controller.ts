@@ -1,9 +1,13 @@
 import { Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt, { SignOptions } from 'jsonwebtoken';
+import { v4 as uuidv4 } from 'uuid';
 import { AppError } from '../middleware/error.middleware';
 import { AuthRequest } from '../middleware/auth.middleware';
 import { dataStore, Role } from '../lib/databaseService';
+
+// Ephemeral in-memory reset token store (for demo/testing)
+const resetTokens = new Map<string, { userId: string; expires: number }>();
 
 export const register = async (
   req: AuthRequest,
@@ -142,6 +146,74 @@ export const getProfile = async (
           updatedAt: user.updatedAt
         }
       }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const requestPasswordReset = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      throw new AppError('Please provide email', 400);
+    }
+
+    const user = await dataStore.findUserByEmail(email);
+
+    // Always respond success to avoid email enumeration
+    if (user) {
+      const token = uuidv4();
+      resetTokens.set(token, { userId: user.id, expires: Date.now() + 60 * 60 * 1000 });
+      return res.status(200).json({
+        status: 'success',
+        message: 'Password reset link generated',
+        data: { token } // returned for testing; would be emailed in production
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Password reset link generated'
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resetPassword = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { token, newPassword } = req.body;
+    if (!token || !newPassword) {
+      throw new AppError('Token and new password are required', 400);
+    }
+
+    const entry = resetTokens.get(token);
+    if (!entry || entry.expires < Date.now()) {
+      throw new AppError('Invalid or expired token', 400);
+    }
+
+    const user = await dataStore.findUserById(entry.userId);
+    if (!user) {
+      resetTokens.delete(token);
+      throw new AppError('User not found', 404);
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    await dataStore.updateUser(user.id, { password: hashedPassword });
+    resetTokens.delete(token);
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Password has been reset'
     });
   } catch (error) {
     next(error);

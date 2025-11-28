@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes';
 import taskRoutes from './routes/task.routes';
 import groupRoutes from './routes/group.routes';
 import userRoutes from './routes/user.routes';
+import notificationRoutes from './routes/notification.routes';
 import { errorHandler } from './middleware/error.middleware';
 
 dotenv.config();
@@ -28,7 +29,8 @@ app.get('/', (req, res) => {
       auth: '/api/auth',
       tasks: '/api/tasks',
       groups: '/api/groups',
-      users: '/api/users'
+      users: '/api/users',
+      notifications: '/api/notifications'
     }
   });
 });
@@ -37,6 +39,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 app.use(errorHandler);
 
