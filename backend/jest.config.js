@@ -25,4 +25,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/src/__tests__/bdd/'],
   verbose: true,
   // BDD tests are executed separately via npm run test:bdd
+  testTimeout: 30000,
+  globalSetup: '<rootDir>/src/__tests__/globalSetup.js',
+  globalTeardown: '<rootDir>/src/__tests__/globalTeardown.js',
 };
