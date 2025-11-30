@@ -14,3 +14,15 @@ case is, that we did not implement all use cases.
   - ICS export: headers and VCALENDAR content with due tasks.
   - Task comments controllers: add/list/delete, missing comment error.
   - Notifications controllers: list (unreadOnly), create (defaults to current user), mark-as-read.
+
+
+# 7.3
+The methods needed are in /lib/databaseService.ts
+Creating a new user -> createUser
+- Finding a user by ID -> findUserById
+- Finding a user by email -> findUserbyEmail
+- Updating user information -> updateUser
+- Deleting a user -> deleteUser
+- Querying users by role -> queryUserByRole
+- Querying users by team membership -> findGroupMembersByGroupId
+
