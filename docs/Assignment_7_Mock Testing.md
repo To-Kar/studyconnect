@@ -18,7 +18,7 @@ case is, that we did not implement all use cases.
 
 # 7.3
 The methods needed are in /lib/databaseService.ts
-Creating a new user -> createUser
+- Creating a new user -> createUser
 - Finding a user by ID -> findUserById
 - Finding a user by email -> findUserbyEmail
 - Updating user information -> updateUser
