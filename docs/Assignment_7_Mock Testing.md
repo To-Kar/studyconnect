@@ -36,4 +36,8 @@ Implemented `UserService` and its unit tests using Jest mocks to isolate busines
 
 ## Exercise 7.3
 Requirement: working Docker Desktop installation as described in https://docs.docker.com/get-started/introduction/get-docker-desktop/
+There is a new dependency (testcontainers) so its required to run npm install initially. The methods needed for communication with the database are in the file /backend/src/lib/databaseService.ts
+while the corresponding tests are located at backend/src/__tests__/databaseService.test.ts
+
+
 
