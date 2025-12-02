@@ -27,4 +27,8 @@ export class UserService {
         }
         return user;
     }
+    
+    async findUserByEmail(email: string): Promise<User | null> {
+        return await dataStore.findUserByEmail(email);
+    }
 }
