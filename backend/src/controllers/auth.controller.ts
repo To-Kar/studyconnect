@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { AppError } from '../middleware/error.middleware';
 import { AuthRequest } from '../middleware/auth.middleware';
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/UserService';
 
 const userService = new UserService();
 
