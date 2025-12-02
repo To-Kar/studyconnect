@@ -29,4 +29,11 @@ export async function startServer(): Promise<Server> {
   return server;
 }
 
+if (require.main === module) {
+  startServer().catch((err) => {
+    console.error('Fehler beim Starten des Servers:', err);
+    process.exit(1);
+  });
+}
+
 export default app;
