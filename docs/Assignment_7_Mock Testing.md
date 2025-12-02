@@ -39,5 +39,28 @@ Requirements: working Docker Desktop installation as described in `https://docs.
 There is a new dependency (testcontainers) and because of this its required to run `npm install` initially. The methods needed for communication with the database are in the file `backend/src/lib/databaseService.ts`
 while the corresponding tests are located at `backend/src/__tests__/databaseService.test.ts`
 
+## Exercise 7.4: REST API Controller
+
+Implemented the REST API layer acting as the entry point for HTTP requests, following the 3-tier architecture (Controller ↔ Service ↔ DataStore) requirements.
+
+### Implementation
+- **Controllers**: Implemented RESTful controllers in `backend/src/controllers/` handling input validation, HTTP status codes, and response formatting.
+  - **Auth Controller**: Handles `register` (with password hashing), `login` (returning JWT tokens), and password reset flows.
+  - **User Controller**: Manages user profile retrieval and updates via `getUserById` and `updateUser`.
+  - **Task Controller**: Implements full CRUD operations for tasks (Create, Read, Update, Delete) and handles assignment logic.
+- **Service Integration**: Integrated the `UserService` into the authentication flow to decouple business logic from the HTTP layer.
+- **Server Infrastructure**: Updated `backend/src/server.ts` to ensure the server waits for database migrations and seeding before accepting connections.
+
+### API Endpoints
+The following endpoints are now available under `http://localhost:3000/api`:
+- **Authentication**: `/auth/register`, `/auth/login`, `/auth/reset`
+- **Users**: `/users/:id` (GET, PUT)
+- **Tasks**: `/tasks` (GET, POST), `/tasks/:id` (PUT, DELETE)
+
+### Execution
+To run the API locally:
+1. Start the database: `docker-compose up -d`
+2. Start the backend: `npm run dev`
+
 
 
