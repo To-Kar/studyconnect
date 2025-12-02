@@ -1,12 +1,13 @@
 import { Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
-import jwt, { SignOptions } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { AppError } from '../middleware/error.middleware';
 import { AuthRequest } from '../middleware/auth.middleware';
-import { dataStore, Role } from '../lib/databaseService';
+import { UserService } from '../services/user.service';
 
-// Ephemeral in-memory reset token store (for demo/testing)
+const userService = new UserService();
+
 const resetTokens = new Map<string, { userId: string; expires: number }>();
 
 export const register = async (
@@ -21,27 +22,8 @@ export const register = async (
       throw new AppError('Please provide email, username and password', 400);
     }
 
-    // Check if user exists
-    const existingUser = await dataStore.findUserByEmailOrUsername(email, username);
+    const user = await userService.registerUser(email, username, password);
 
-    if (existingUser) {
-      throw new AppError('User with this email or username already exists', 409);
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    // Create user
-    const user = await dataStore.createUser({
-      email,
-      username,
-      password: hashedPassword,
-      role: Role.USER,
-      points: 0,
-      badges: []
-    });
-
-    // Generate token
     const jwtSecret = process.env.JWT_SECRET || 'fallback-secret';
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
@@ -80,19 +62,7 @@ export const login = async (
       throw new AppError('Please provide email and password', 400);
     }
 
-    // Find user
-    const user = await dataStore.findUserByEmail(email);
-
-    if (!user) {
-      throw new AppError('Invalid email or password', 401);
-    }
-
-    // Check password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordValid) {
-      throw new AppError('Invalid email or password', 401);
-    }
+    const user = await userService.loginUser(email, password);
 
     // Generate token
     const jwtSecret = process.env.JWT_SECRET || 'fallback-secret';
@@ -126,7 +96,7 @@ export const getProfile = async (
   next: NextFunction
 ) => {
   try {
-    const user = await dataStore.findUserById(req.user!.id);
+    const user = await userService.getUserById(req.user!.id);
 
     if (!user) {
       throw new AppError('User not found', 404);
@@ -162,17 +132,15 @@ export const requestPasswordReset = async (
     if (!email) {
       throw new AppError('Please provide email', 400);
     }
+    const user = await userService.findUserByEmail(email).catch(() => null); 
 
-    const user = await dataStore.findUserByEmail(email);
-
-    // Always respond success to avoid email enumeration
     if (user) {
       const token = uuidv4();
       resetTokens.set(token, { userId: user.id, expires: Date.now() + 60 * 60 * 1000 });
       return res.status(200).json({
         status: 'success',
         message: 'Password reset link generated',
-        data: { token } // returned for testing; would be emailed in production
+        data: { token } // returned for testing
       });
     }
 
@@ -201,14 +169,18 @@ export const resetPassword = async (
       throw new AppError('Invalid or expired token', 400);
     }
 
-    const user = await dataStore.findUserById(entry.userId);
+    // Service Call: User prüfen
+    const user = await userService.getUserById(entry.userId);
     if (!user) {
       resetTokens.delete(token);
       throw new AppError('User not found', 404);
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 12);
-    await dataStore.updateUser(user.id, { password: hashedPassword });
+    
+    // Service Call: Update User
+    await userService.updateUser(user.id, { password: hashedPassword });
+    
     resetTokens.delete(token);
 
     res.status(200).json({
