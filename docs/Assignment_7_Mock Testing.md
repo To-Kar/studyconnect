@@ -63,14 +63,3 @@ To run the API locally:
 2. Start the backend: `npm run dev`
 
 
-
-# 7.3
-The methods needed are in /lib/databaseService.ts
-- Creating a new user -> createUser
-- Finding a user by ID -> findUserById
-- Finding a user by email -> findUserbyEmail
-- Updating user information -> updateUser
-- Deleting a user -> deleteUser
-- Querying users by role -> queryUserByRole
-- Querying users by team membership -> findGroupMembersByGroupId
-
