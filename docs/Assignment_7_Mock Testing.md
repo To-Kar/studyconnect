@@ -39,6 +39,15 @@ Requirements: working Docker Desktop installation as described in `https://docs.
 There is a new dependency (testcontainers) and because of this its required to run `npm install` initially. The methods needed for communication with the database are in the file `backend/src/lib/databaseService.ts`
 while the corresponding tests are located at `backend/src/__tests__/databaseService.test.ts`
 
+The methods needed are in /lib/databaseService.ts:
+- Creating a new user -> createUser
+- Finding a user by ID -> findUserById
+- Finding a user by email -> findUserbyEmail
+- Updating user information -> updateUser
+- Deleting a user -> deleteUser
+- Querying users by role -> queryUserByRole
+- Querying users by team membership -> findGroupMembersByGroupId
+
 ## Exercise 7.4: REST API Controller
 
 Implemented the REST API layer acting as the entry point for HTTP requests, following the 3-tier architecture (Controller ↔ Service ↔ DataStore) requirements.
@@ -61,16 +70,3 @@ The following endpoints are now available under `http://localhost:3000/api`:
 To run the API locally:
 1. Start the database: `docker-compose up -d`
 2. Start the backend: `npm run dev`
-
-
-
-# 7.3
-The methods needed are in /lib/databaseService.ts
-- Creating a new user -> createUser
-- Finding a user by ID -> findUserById
-- Finding a user by email -> findUserbyEmail
-- Updating user information -> updateUser
-- Deleting a user -> deleteUser
-- Querying users by role -> queryUserByRole
-- Querying users by team membership -> findGroupMembersByGroupId
-
