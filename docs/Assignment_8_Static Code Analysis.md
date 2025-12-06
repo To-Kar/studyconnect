@@ -63,5 +63,26 @@ It is a bit disappointing to see such little coverage percentages but it's proba
 ### Installation & Configuration
 Open a terminal in the projects `backend` folder. All following commands need to be run there.
 
-At first we need to install the packages by executing `npm install --save-dev pre-commit`
+At first we need to install the packages by executing `npm install --save-dev husky lint-staged`
+
+Then we configure `lint-staged` in `package.json` to run eslint on TypeScript files:
+```json
+"lint-staged": {
+  "*.ts": "eslint"
+}
+```
+
+We also add a prepare script to `package.json` to ensure husky is installed automatically:
+```json
+"scripts": {
+  "prepare": "cd .. && husky backend/.husky"
+}
+```
+
+Finally, we initialize husky and create the pre-commit hook:
+```bash
+npm run prepare
+echo "cd backend && npx lint-staged" > .husky/pre-commit
+```
+Now, every time we commit, `lint-staged` will run eslint on the changed files. If there are errors, the commit will be aborted.
 
