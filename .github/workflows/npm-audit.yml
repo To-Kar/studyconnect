@@ -10,6 +10,5 @@ jobs:
 
       steps:
         - name: audit
-          shell: bash
           run: |
             npm audit
