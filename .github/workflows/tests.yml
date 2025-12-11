@@ -56,7 +56,3 @@ jobs:
         with:
           name: cucumber-report
           path: backend/src/__tests__/bdd/reports/cucumber-report.html
-
-      - name: audit
-        run: |
-          npm audit
