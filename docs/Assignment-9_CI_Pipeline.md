@@ -38,7 +38,7 @@ We chose the "push to main"-trigger, as we use the other branches for quick chan
 
 Uses the bash shell on a amd64-linux runner to run `npm audit`, a tool which shows vulnerabilities in the projects dependencies. Before this it runs `npm audit signatures` which checks the signatures of the files downloaded from the npm registry. We did not use the artifacts option from GH actions, as this is extra work (download zipfile, extract...) when reviewing the output of the workflow.
 
-The added value is at first, that we can be sure that the used npm dependecies are not tampered by checking the signatures. As a second point we get informed about the vulnerabilities in our project. As the fixing process can create additional problems we decided to not do this automatically.
+The added value is at first, that we can be sure that the used npm dependencies are not tampered by checking the signatures. As a second point we get informed about the vulnerabilities in our project. As the fixing process can create additional problems we decided to not do this automatically.
 
 **Triggers:**
 - Push to any branch
