@@ -14,10 +14,12 @@ jobs:
         - name: Install deps (root)
           run: npm ci
         
+        - name: check signatures
+          run: |
+            npm audit signatures
+
         - name: audit
           run: |
             npm audit 
 
-        - name: check signatures
-          run: |
-            npm audit signatures
+        
