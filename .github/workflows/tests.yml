@@ -14,42 +14,48 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: studyconnect
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DB_NAME }}
         ports:
           - "5432:5432"
         options: >-
           --health-cmd="pg_isready -U postgres" --health-interval=10s --health-timeout=5s --health-retries=5
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - name: Install deps (root)
         run: npm ci
+
       - name: Install deps (backend)
         working-directory: backend
         run: npm ci
+
       - name: Set env for backend to use service DB
         run: |
           echo "DB_HOST=localhost" >> $GITHUB_ENV
           echo "DB_PORT=5432" >> $GITHUB_ENV
-          echo "DB_USER=postgres" >> $GITHUB_ENV
-          echo "DB_PASSWORD=postgres" >> $GITHUB_ENV
-          echo "DB_NAME=studyconnect" >> $GITHUB_ENV
+          echo "DB_USER=${{ secrets.DB_USER }}" >> $GITHUB_ENV
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_ENV
+          echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+
       - name: Run BDD tests
         working-directory: backend
         env:
           API_BASE_URL: http://localhost:3000
-          JWT_SECRET: test-secret
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
           DB_HOST: localhost
           DB_PORT: 5432
-          DB_USER: postgres
-          DB_PASSWORD: postgres
-          DB_NAME: studyconnect
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         run: npm run test:bdd
-        
+
       - name: Upload Cucumber report
         uses: actions/upload-artifact@v4
         if: always()
