@@ -16,11 +16,11 @@ jobs:
         
         - name: audit
           run: |
-            npm audit | cat > npm-audit-output.log
+            npm audit #nicht sinnvoll: | cat > npm-audit-output.log
 
-        - name: Upload npm audit result
-          uses: actions/upload-artifact@v4
-          if: always()
-          with:
-            name: npm-audit-log
-            path: npm-audit-output.log
+#        - name: Upload npm audit result
+#          uses: actions/upload-artifact@v4
+#          if: always()
+#          with:
+#            name: npm-audit-log
+#            path: npm-audit-output.log
