@@ -9,6 +9,9 @@ jobs:
       runs-on: ubuntu-latest #[x64, linux] #wird auf irgendeinem runner ausgeführt, der linux auf amd64 ausführt
 
       steps:
+        - name: install
+          run: |
+            npm i --package-lock-only
         - name: audit
           run: |
             npm audit
