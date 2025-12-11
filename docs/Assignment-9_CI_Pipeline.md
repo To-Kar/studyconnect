@@ -32,3 +32,16 @@ We chose the "push to main"-trigger, as we use the other branches for quick chan
 
 ---
 ## Ex 9.2
+**File:** '.github/workflows/npm-audit.yml'
+
+**Workflow:**
+
+Uses the bash shell on a amd64-linux runner to run npm audit, a tool which shows vulnerabilities in the projects dependencies.
+
+**Triggers:**
+- Push to any branch
+- Manual dispatch
+
+**Viewing results:**
+1. Go to [GitHub Actions](https://github.com/To-Kar/studyconnect/actions/workflows/npm-audit.yml)
+
