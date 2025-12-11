@@ -36,7 +36,7 @@ We chose the "push to main"-trigger, as we use the other branches for quick chan
 
 **Workflow:**
 
-Uses the bash shell on a amd64-linux runner to run npm audit, a tool which shows vulnerabilities in the projects dependencies.
+Uses the bash shell on a amd64-linux runner to run 'npm audit', a tool which shows vulnerabilities in the projects dependencies. Additionally it runs 'npm audit signatures' which checks the signatures of the files downloaded from npm registry. We did not use the artifacts option from GH actions, as this is extra work (download zipfile, extract...) when reviewing the output of the workflow.
 
 **Triggers:**
 - Push to any branch
@@ -44,4 +44,6 @@ Uses the bash shell on a amd64-linux runner to run npm audit, a tool which shows
 
 **Viewing results:**
 1. Go to [GitHub Actions](https://github.com/To-Kar/studyconnect/actions/workflows/npm-audit.yml)
-
+2. Select the latest workflow run or if you just want to see any vulnerabilities select the latest workflow run which is indicated with an red (x)
+3. Click on the annotations, if there are any to see the vulnerabilities
+4. To fix the vulnerabilities run 'npm audit fix' in the projects folder locally
