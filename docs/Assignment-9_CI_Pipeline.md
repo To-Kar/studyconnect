@@ -30,13 +30,13 @@ steps:
 
 We chose the "push to main"-trigger, as we use the other branches for quick changes and after a exercise is done we merge it to the main branch. So the CI-Pipeline is the final step before shipping the software.
 
----
+
 ## Ex 9.2
-**File:** '.github/workflows/npm-audit.yml'
+**File:** `.github/workflows/npm-audit.yml`
 
 **Workflow/Explanations:**
 
-Uses the bash shell on a amd64-linux runner to run 'npm audit', a tool which shows vulnerabilities in the projects dependencies. Before this it runs 'npm audit signatures' which checks the signatures of the files downloaded from npm registry. We did not use the artifacts option from GH actions, as this is extra work (download zipfile, extract...) when reviewing the output of the workflow.
+Uses the bash shell on a amd64-linux runner to run `npm audit`, a tool which shows vulnerabilities in the projects dependencies. Before this it runs `npm audit signatures` which checks the signatures of the files downloaded from the npm registry. We did not use the artifacts option from GH actions, as this is extra work (download zipfile, extract...) when reviewing the output of the workflow.
 
 The added value is at first, that we can be sure that the used npm dependecies are not tampered by checking the signatures. As a second point we get informed about the vulnerabilities in our project. As the fixing process can create additional problems we decided to not do this automatically.
 
@@ -47,5 +47,5 @@ The added value is at first, that we can be sure that the used npm dependecies a
 **Viewing results:**
 1. Go to [GitHub Actions](https://github.com/To-Kar/studyconnect/actions/workflows/npm-audit.yml)
 2. Select the latest workflow run or if you just want to see any vulnerabilities select the latest workflow run which is indicated with an red (x)
-3. Click on the annotations, if there are any to see the vulnerabilities
-4. To fix the vulnerabilities run 'npm audit fix' in the projects folder locally
+3. Click on the audit-button to see the output of the console commands. A red (X) indicates that there was an error or that there are vulnerabilities present. Click on it to view the details
+4. To fix the vulnerabilities run `npm audit fix` in the projects folder locally
