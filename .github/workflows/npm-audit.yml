@@ -1,0 +1,13 @@
+name: npm-audit
+
+on:
+  push: #wird bei jedem push ausgeführt
+
+jobs:
+    audit:
+      runs-on: [x64, linux] #wird auf irgendeinem runner ausgeführt, der linux auf amd64 ausführt
+
+      steps:
+        - name: audit
+          shell: bash
+          run: npm audit
