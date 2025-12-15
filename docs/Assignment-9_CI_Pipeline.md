@@ -22,7 +22,7 @@ steps:
 - Manual dispatch
 
 **Viewing Results:**
-1. Go to [GitHub Actions](https://github.com/To-Kar/studyconnect/actions/workflows/tests.yml)
+1. Go to [GitHub Actions](https://github.com/To-Kar/studyconnect/actions/workflows/tests.yml). You need to be logged in to see all the relevant items.
 2. Expand "Run BDD tests" step
 3. Download `cucumber-report` artifact
 
@@ -45,7 +45,7 @@ The added value is at first, that we can be sure that the used npm dependencies 
 - Manual dispatch
 
 **Viewing results:**
-1. Go to [GitHub Actions](https://github.com/To-Kar/studyconnect/actions/workflows/npm-audit.yml)
+1. Go to [GitHub Actions](https://github.com/To-Kar/studyconnect/actions/workflows/npm-audit.yml). You need to be logged in to see all the relevant items.
 2. Select the latest workflow run or if you just want to see any vulnerabilities select the latest workflow run which is indicated with an red (x)
 3. Click on the audit-button to see the output of the console commands. A red (X) indicates that there was an error or that there are vulnerabilities present. Click on it to view the details
 4. To fix the vulnerabilities run `npm audit fix` in the projects folder locally
