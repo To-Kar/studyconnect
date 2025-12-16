@@ -1,0 +1,25 @@
+name: npm-audit
+
+on:
+  push: #wird bei jedem push ausgeführt
+  workflow_dispatch: #oder manuell
+
+jobs:
+    audit:
+      runs-on: ubuntu-latest #[x64, linux] #wird auf irgendeinem runner ausgeführt, der linux auf amd64 ausführt
+
+      steps:
+        - name: checkout
+          uses: actions/checkout@v4
+        - name: Install deps (root)
+          run: npm ci
+        
+        - name: check signatures
+          run: |
+            npm audit signatures
+
+        - name: audit
+          run: |
+            npm audit 
+
+        
