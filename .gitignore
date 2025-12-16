@@ -117,13 +117,15 @@ build/
 # ------------------------------
 # Test coverage artifacts (generated)
 # ------------------------------
-coverage/
-**/coverage/
-**/lcov-report/
-**/lcov.info
-backend/coverage/
+#auskommentiert für ex9
+#coverage/
+#**/coverage/
+#**/lcov-report/
+#**/lcov.info
+#backend/coverage/
 
 # Cucumber reports
-backend/src/__tests__/bdd/reports/
+#auskommentiert für ex9
+#backend/src/__tests__/bdd/reports/
 
 
