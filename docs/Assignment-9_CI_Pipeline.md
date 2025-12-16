@@ -49,3 +49,9 @@ The added value is at first, that we can be sure that the used npm dependencies 
 2. Select the latest workflow run or if you just want to see any vulnerabilities select the latest workflow run which is indicated with an red (x)
 3. Click on the audit-button to see the output of the console commands. A red (X) indicates that there was an error or that there are vulnerabilities present. Click on it to view the details
 4. To fix the vulnerabilities run `npm audit fix` in the projects folder locally
+
+## Ex 9.3
+**File:** `.github/workflows/build.yml`
+
+**Workflow:**
+After creating the project on the sonarqube server and creating the required tokens this task was mainly copy and paste from the tutorial at sonarqube.
