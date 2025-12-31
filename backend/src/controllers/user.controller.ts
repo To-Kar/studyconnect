@@ -1,7 +1,7 @@
 import { Response, NextFunction } from 'express';
 import { AppError } from '../middleware/error.middleware';
 import { AuthRequest } from '../middleware/auth.middleware';
-import { dataStore } from '../lib/dataStore';
+import { dataStore } from '../lib/databaseService';
 
 export const getUsers = async (
   req: AuthRequest,
@@ -10,7 +10,7 @@ export const getUsers = async (
 ) => {
   try {
     const allUsers = await dataStore.findAllUsers();
-    
+
     // Sort by points descending
     const users = allUsers
       .sort((a, b) => b.points - a.points)
@@ -48,7 +48,7 @@ export const getUserById = async (
 
     // Get assigned tasks for this user
     const assignedTasks = await dataStore.findAllTasks({ assigneeId: req.params.id });
-    
+
     const userWithTasks = {
       id: user.id,
       email: user.email,
@@ -99,7 +99,7 @@ export const updateUser = async (
 
     res.status(200).json({
       status: 'success',
-      data: { 
+      data: {
         user: {
           id: user.id,
           email: user.email,

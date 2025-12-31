@@ -14,6 +14,7 @@
     "test:coverage": "jest --coverage",
     "test:verbose": "jest --verbose",
     "test:run": "node run-tests.js",
+    "test:api": "jest src/__tests__/api.test.ts --config jest.local.config.js",
     "setup": "node complete-setup.js",
     "quick-test": "jest --passWithNoTests --silent",
     "prepare": "cd .. && husky backend/.husky"
