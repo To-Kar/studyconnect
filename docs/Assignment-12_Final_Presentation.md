@@ -19,30 +19,49 @@ The objective of our prototype is to implement the core functionality of StudyCo
 ## 2. Implementation Overview
 
 ### 2.1 Prototype Status
-Brief overview of the current implementation state.
+The backend is largely implemented with a functional REST API, database schema, and testing harness. The frontend is currently planned but not yet implemented.
 
 ### 2.2 Tech Stack
-- **Frontend:** <e.g. React, Vue, HTML/CSS>
-- **Backend:** <e.g. Node.js, Spring Boot, Flask>
-- **Database:** <e.g. PostgreSQL, MongoDB>
-- **Tools & Frameworks:** <e.g. Docker, Git, GitHub Actions>
+- **Frontend:** Not yet implemented (Planned: React + TypeScript + Vite)
+- **Backend:** Node.js, Express, TypeScript
+- **Database:** PostgreSQL (v15-alpine via Docker)
+- **Tools & Frameworks:** Docker, Docker Compose, Git, GitHub Actions
 
 ### 2.3 Key Implementation Details
-- API style (REST, GraphQL, etc.)
-- State management approach
-- Data model overview
-- Authentication / authorization (if any)
+- **API Style:** RESTful API exposing resources like Auth, Users, Groups, and Tasks.
+- **State Management:** Stateless Backend API using JWT for authentication.
+- **Data Model:** Relational model (PostgreSQL) managed via raw SQL (`schema.sql`) and migrations. Key entities include Users, Groups, Tasks, Comments, and Notifications.
+- **Authentication:** JSON Web Tokens (JWT) for session handling and Bcrypt for password hashing.
 
 ### 2.4 Architecture
-High-level architecture description.
+The system follows a layered architecture: `Routes` -> `Controllers` -> `Services` -> `Data Access Layer (DAL)`.
 
-(Insert architecture diagram here or link to an image)
+```mermaid
+graph TD
+    Client[Client (Planned)] -->|HTTP/REST| API[Express API Gateway]
+    API --> Auth[Auth Routes]
+    API --> Users[User Routes]
+    API --> Tasks[Task Routes]
+    API --> Groups[Group Routes]
+    
+    Auth --> Controllers
+    Users --> Controllers
+    Tasks --> Controllers
+    Groups --> Controllers
+    
+    Controllers --> Services[Business Logic Services]
+    Services --> DAL[Data Access Layer (lib)]
+    DAL --> DB[(PostgreSQL)]
+```
 
 ### 2.5 Integrated Tools / Services
-- CI/CD pipeline
-- Database services
-- Cloud services
-- Testing tools
+- **CI/CD:** GitHub Actions (configured in `tests.yml`, `npm-audit.yml`).
+- **Testing:**
+    - **Unit/Integration:** Jest
+    - **BDD:** Cucumber
+    - **Load Testing:** JMeter (`.jmx` files)
+    - **API Testing:** Postman Collection
+- **Code Quality:** SonarQube (`sonar-project.properties`) and ESLint.
 
 ### 2.6 Demo (Optional)
 
