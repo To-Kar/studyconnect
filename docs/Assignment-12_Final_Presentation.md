@@ -125,8 +125,8 @@ Not (fully) covered yet:
 - Team lead (if applicable)
 
 ### 4.2 Challenges
-- Technical challenges
-- Organizational challenges
+- Technical challenges ()
+- Organizational challenges (time management: 5 different people with different jobs, different university schedules different lives)
 
 ### 4.3 What Worked Well
 - Tools
