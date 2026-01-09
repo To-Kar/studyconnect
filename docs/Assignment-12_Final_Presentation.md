@@ -52,7 +52,7 @@ High-level architecture description.
 **Functional requirements:**
 - user management (register/login, profiles, join/leave groups, admin invites/
     removals, role-based permissions)
--task/goal management (CRUD with title/notes/priority/due date/category, states
+- task/goal management (CRUD with title/notes/priority/due date/category, states
     open/in progress/completed, list/filter/sort, export to PDF/ICS)
 - group collaboration (create groups, assign tasks, task comments/messages, 
     members update progress, group-wide overview) 
@@ -71,11 +71,14 @@ High-level architecture description.
 
 ### 3.2 Implementation Status
 
-| Requirement | Status | Notes |
-|------------|--------|-------|
-| Req 1 | Implemented | |
-| Req 2 | Postponed | Reason |
-| Req 3 | Dropped | Reason |
+Not (fully) coverde yet:
+
+- No PDF export implementation (only ICS).
+- No UI in this repo, so usability and cross-device accessibility goals aren’t
+    verifiable.
+- Notifications are manual endpoints; no scheduled reminders/real push setup.
+- Reliability targets (availability/recovery) and data sync across devices aren’t 
+    addressed; backend uses in-memory/DB stubs without deployment/ops safeguards.
 
 ### 3.3 Changes & Decisions
 - Which requirements were changed, postponed, or dropped?
