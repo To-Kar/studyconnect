@@ -96,11 +96,14 @@ graph TD
 
 Implemented successfully: 
 
-backend covers user auth/profile, group creation/membership with roles, task CRUD with statuses, assignments, comments, overdue marking, ICS export, notifications endpoints, and gamification (points/badges, leaderboard). 
-Quality-wise, functional suitability/testability are supported by modular design and Jest tests 
+- backend covers user auth/profile
+- group creation/membership with roles
+- task CRUD with statuses
+- assignments, comments, overdue marking, ICS export, notifications endpoints, and gamification (points/badges, leaderboard). 
+- Quality-wise: functional suitability/testability are supported by modular design and Jest tests 
 
 Not (fully) covered yet:
-
+- Frontend
 - No PDF export implementation (only ICS).
 - Notifications are manual endpoints; no scheduled reminders/real push setup.
 - Reliability targets (availability/recovery) and data sync across devices aren’t 
@@ -139,7 +142,7 @@ Not (fully) covered yet:
 
 ### 4.1 Team Organization
 - The tasks were in general distributed by our Whatsapp or Discord chat group. When someone started a task, he informed the rest of the team so there won't be any collisions. When he finished the task, he pushed it to the git-repo and sent a message to the group, so that everyone else was notified.
-- There were no fixed roles at all, every member did everything once.
+- There were no fixed roles at all, every member did everything once. It would probably have been very bad if we had such fixed roles, because not every assignment had tasks for all the roles.
 - There was also no official team leader. Main decisions were made by all members by discussion.
 
 ### 4.2 Challenges
@@ -186,14 +189,14 @@ Not (fully) covered yet:
 - URL: <Link>
 
 ### 5.4 Documentation & Collaboration
-- Documentation style: We created markdown files in Github, one file for each assignment. In the md file we recreated the structure of the assignment and put our documentation in between.
+- Documentation style: We created markdown files in Github, one file for each assignment. In the md-file we recreated the structure of the assignment and put our documentation in between.
 - Collaboration workflow (Git, issues, pull requests)
 
 ---
 
 ## 6. Conclusion
 
-Short summary of the prototype, lessons learned, and final thoughts.
+The prototype is in working state. Main task to do next is the frontend. Testing in the CI runs well and we see the test results directly in Github. 
 
 ---
 
