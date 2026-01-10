@@ -1,7 +1,7 @@
 # StudyConnect – Final Prototype Presentation
 
-**Group:** 
-**Members:** <Name 1>, <Name 2>, <Name 3>, 
+**Group:** 03
+**Members:** Laurent Siwaily, Tom Karaqi, Hashmatulla Habibi, Linus Sauerland, Marius Buchenloh
 
 ---
 
@@ -38,7 +38,7 @@ The system follows a layered architecture: `Routes` -> `Controllers` -> `Service
 
 ```mermaid
 graph TD
-    Client[Client (Planned)] -->|HTTP/REST| API[Express API Gateway]
+    Client["Client (Planned)"] -->|HTTP/REST| API[Express API Gateway]
     API --> Auth[Auth Routes]
     API --> Users[User Routes]
     API --> Tasks[Task Routes]
@@ -50,8 +50,10 @@ graph TD
     Groups --> Controllers
     
     Controllers --> Services[Business Logic Services]
-    Services --> DAL[Data Access Layer (lib)]
+    Controllers --> DAL["Data Access Layer (lib)"]
+    Services --> DAL
     DAL --> DB[(PostgreSQL)]
+
 ```
 
 ### 2.5 Integrated Tools / Services
@@ -136,9 +138,9 @@ Not (fully) covered yet:
 ## 4. Retrospective & Lessons Learned
 
 ### 4.1 Team Organization
-- Task distribution
-- Roles (e.g. frontend, backend, testing)
-- Team lead (if applicable)
+- The tasks were in general distributed by our Whatsapp or Discord chat group. When someone started a task, he informed the rest of the team so there won't be any collisions. When he finished the task, he pushed it to the git-repo and sent a message to the group, so that everyone else was notified.
+- There were no fixed roles at all, every member did everything once.
+- There was also no official team leader. Main decisions were made by all members by discussion.
 
 ### 4.2 Challenges
 - **Technical Challenges:**
@@ -148,22 +150,20 @@ Not (fully) covered yet:
     - **Scheduling & Coordination:** With 5 members balancing different jobs, university timetables, and personal lives, finding common synchronous meeting times was extremely difficult, slowing down decision-making.
 
 ### 4.3 What Worked Well
-- Tools
-- Collaboration
+- Tools: Using Github was at first unfamiliar, especially for the non-programmers among us, but we had a good learning experience and very informative team members and in the end we managed to use Github as intended.
+- Collaboration: There were no group internal problems at all. Everyone did his part and we did not argue at all.
 - Processes
 
 ### 4.4 What Didn’t Work Well
-- Bottlenecks
-- Mistakes
-- Technical debt
+- Time management: As we only had one week for each assignment and there are other tasks from other subjects to do also, we sometimes had to struggle to get the assignment done in time.
+- Mistakes: As the application grew bigger it was a bit tricky to keep track of all the requirements, for example docker needs to be up before running the app and so on.
 
 ### 4.5 Exercises & Learning Outcomes
-- Most helpful or interesting exercise
-- Key takeaways
+- Most helpful or interesting exercise: Integrating the testing in the CI pipeline was very interesting.
+- Key takeaways: Features of Github one doesn't usually use: secrets management, actions.
 
 ### 4.6 Improvements & Suggestions
-- What would we do differently in the next iteration?
-- Suggestions to improve the lecture / course
+- Suggestions to improve the lecture / course: Mixed groups (ISB/SWB) are better, especially for the ISB-members as all the details of programming are new to them. As an ISB student one does not necessarily know very much about Github.
 
 ---
 
@@ -186,7 +186,7 @@ Not (fully) covered yet:
 - URL: <Link>
 
 ### 5.4 Documentation & Collaboration
-- Documentation style
+- Documentation style: We created markdown files in Github, one file for each assignment. In the md file we recreated the structure of the assignment and put our documentation in between.
 - Collaboration workflow (Git, issues, pull requests)
 
 ---
@@ -198,6 +198,4 @@ Short summary of the prototype, lessons learned, and final thoughts.
 ---
 
 ## 7. Links
-- Repository: <GitHub/GitLab URL>
-- Live system (if any): <URL>
-- Demo video: <URL>
+- Repository: https://github.com/To-Kar/studyconnect
