@@ -65,9 +65,6 @@ graph TD
     - **API Testing:** Postman Collection
 - **Code Quality:** SonarQube (`sonar-project.properties`) and ESLint.
 
-### 2.6 Demo (Optional)
-
-
 ## 3. Requirements Recap
 
 ### 3.1 Initial Requirements
@@ -155,7 +152,6 @@ Not (fully) covered yet:
 ### 4.3 What Worked Well
 - Tools: Using Github was at first unfamiliar, especially for the non-programmers among us, but we had a good learning experience and very informative team members and in the end we managed to use Github as intended.
 - Collaboration: There were no group internal problems at all. Everyone did his part and we did not argue at all.
-- Processes
 
 ### 4.4 What Didn’t Work Well
 - Time management: As we only had one week for each assignment and there are other tasks from other subjects to do also, we sometimes had to struggle to get the assignment done in time.
