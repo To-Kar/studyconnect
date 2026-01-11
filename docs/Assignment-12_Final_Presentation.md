@@ -166,27 +166,27 @@ Not (fully) covered yet:
 
 ---
 
-## 5. Optional: Additional Aspects
+## 5. Additional Aspects & Quality Assurance
 
-### 5.1 Testing
-- Unit tests
-- Integration tests
-- API tests
-- Test coverage (if available)
+### 5.1 Advanced Testing Strategies
+To ensure high software quality, we went beyond standard unit testing:
+- **BDD (Behavior Driven Development):** Implemented a complete BDD test suite using Cucumber.
+    - *Status:* 14 scenarios implemented covering core functionalities.
+    - *Location:* `src/__tests__/bdd/reports` (generated via `cucumber-report.html`).
+- **Load Testing:** Performed performance analysis using Apache JMeter.
+    - *Scenarios:* Implemented both `constant-loadtest` and `ramp-loadtest` to simulate traffic spikes.
+    - *Config:* `constant-loadtest-group3.jmx` / `ramp-loadtest-group3.jmx`.
+- **API Testing:** Automated API integration tests using Postman (`studyconnect.postman_collection.json`).
 
-### 5.2 CI / Quality Metrics
-- CI reports
-- Static analysis
-- Performance or load testing
+### 5.2 CI/CD & Static Analysis
+We integrated a robust CI pipeline using **GitHub Actions**:
+- **Workflows:** configured in `.github/workflows` to run on every push.
+- **SonarQube Integration:** Added `sonar-project.properties` to track code quality, technical debt, and test coverage automatically.
+- **Linter:** ESLint ensures code style consistency across the team.
 
-### 5.3 Deployment
-- Deployment platform (e.g. bwCloud, Vercel, Heroku)
-- Public access: Yes / No
-- URL: <Link>
-
-### 5.4 Documentation & Collaboration
-- Documentation style: We created markdown files in Github, one file for each assignment. In the md-file we recreated the structure of the assignment and put our documentation in between.
-- Collaboration workflow (Git, issues, pull requests)
+### 5.3 Deployment & Documentation
+- **Deployment:** currently local via **Docker Compose** (orchestrating Backend + DB).
+- **Documentation:** The project follows a "Docs-as-Code" approach. All deliverables, architectural decisions, and lab reports are versioned directly in the `docs/` folder alongside the source code.
 
 ---
 
