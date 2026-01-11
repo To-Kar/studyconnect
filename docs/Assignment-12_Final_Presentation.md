@@ -36,25 +36,7 @@ The backend is largely implemented with a functional REST API, database schema, 
 ### 2.4 Architecture
 The system follows a layered architecture: `Routes` -> `Controllers` -> `Services` -> `Data Access Layer (DAL)`.
 
-```mermaid
-graph TD
-    Client["Client (Planned)"] -->|HTTP/REST| API[Express API Gateway]
-    API --> Auth[Auth Routes]
-    API --> Users[User Routes]
-    API --> Tasks[Task Routes]
-    API --> Groups[Group Routes]
-    
-    Auth --> Controllers
-    Users --> Controllers
-    Tasks --> Controllers
-    Groups --> Controllers
-    
-    Controllers --> Services[Business Logic Services]
-    Controllers --> DAL["Data Access Layer (lib)"]
-    Services --> DAL
-    DAL --> DB[(PostgreSQL)]
-
-```
+![Architecture Diagram](architecture.png)
 
 ### 2.5 Integrated Tools / Services
 - **CI/CD:** GitHub Actions (configured in `tests.yml`, `npm-audit.yml`).
